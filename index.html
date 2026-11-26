@@ -4,6 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>校邻 · 校园互助便民服务平台</title>
+<meta name="description" content="校邻是校园互助便民服务平台：快递代取、闲置流转、资料共享、临时帮扶四个模块，同楼顺手带，跨楼赶时间才计价。">
+<meta name="theme-color" content="#083F2A">
+<meta property="og:title" content="校邻 · 校园互助便民服务平台">
+<meta property="og:description" content="快递代取、闲置流转、资料共享、临时帮扶。同楼顺手带，跨楼赶时间才计价。">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%23083F2A'/%3E%3Cpath d='M12 4.5 5 8.4v7.4l7 3.7 7-3.7V8.4z' fill='none' stroke='%23fff' stroke-width='1.6' stroke-linejoin='round'/%3E%3Cpath d='M5 8.4 12 12l7-3.6' fill='none' stroke='%23fff' stroke-width='1.6'/%3E%3C/svg%3E">
 <style>
 :root{
   --g:#0E6B48; --g-d:#0A4E35; --g-l:#EDF6F1; --g-line:#D8E7DE;
@@ -208,6 +214,297 @@ label.f{display:block;font-size:11px;color:var(--muted);margin:14px 0 5px;letter
   .dash .metrics>div{flex:1;padding:0 6px}
   .side-flex{display:none}
 }
+
+/* ══════════ 设计系统层：类型 / 间距 / 圆角 / 动效 统一到 token ══════════ */
+:root{
+  --g:#0B5F41; --g-d:#083F2A; --g-l:#EEF6F1; --g-line:#D6E4DB;
+  --sand:#8A6A3E; --sand-l:#F5EFE4;
+  --ink:#111612; --ink2:#39423B; --muted:#6F7B72;
+  --paper:#F6F5F1; --white:#FFF;
+  --line:#E6E3DB; --line2:#F0EEE7;
+  --ease:cubic-bezier(.22,1,.36,1);
+  --sh:0 1px 2px rgba(17,22,18,.04), 0 12px 32px -20px rgba(17,22,18,.18);
+}
+body{font-family:"PingFang SC","HarmonyOS Sans SC","Microsoft YaHei UI","Microsoft YaHei",system-ui,sans-serif;
+  font-size:16px;line-height:24px;background:var(--paper);color:var(--ink);-webkit-text-size-adjust:100%}
+h1,h2,h3,h4,.h1,.h2,.lead,.task .title,.metric .n{text-wrap:balance}
+p,.sub,.note,.meta,.mod .desc,.tl .c{text-wrap:pretty}
+
+/* 文本样式：Heading / Title / Body / Button / Caption */
+.eyebrow{font-size:12px;line-height:16px;letter-spacing:1.6px;font-weight:500;color:var(--muted)}
+.crumb{font-size:12px;line-height:16px;letter-spacing:1.4px;color:var(--muted)}
+.lead{font-size:30px;line-height:36px;font-weight:600;letter-spacing:0;max-width:680px;margin-top:8px;
+  background:linear-gradient(90deg,#0C110D,#5C635A);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead em{color:var(--g);-webkit-text-fill-color:var(--g)}
+.h1{font-size:24px;line-height:32px;font-weight:600;letter-spacing:0}
+.h2{font-size:18px;line-height:28px;font-weight:600;letter-spacing:0}
+.sub{font-size:16px;line-height:24px;color:var(--muted);margin-top:12px;max-width:680px}
+.meta{font-size:14px;line-height:20px;color:var(--muted)}
+.note{font-size:14px;line-height:20px;color:var(--muted)}
+.mini{font-size:12px;line-height:16px;color:var(--muted);letter-spacing:0}
+.tag{font-size:12px;line-height:16px;padding:2px 8px;border-radius:6px;letter-spacing:0}
+.status{font-size:12px;line-height:16px}
+.price{font-size:20px;line-height:28px;letter-spacing:0}
+.price small{font-size:12px;margin-left:2px}
+.task .title{font-size:18px;line-height:28px;letter-spacing:0}
+.task .cat{font-size:12px;letter-spacing:1.4px}
+.stat .k{font-size:12px;line-height:16px;letter-spacing:1.4px}
+.stat .n{font-size:30px;line-height:36px;margin-top:8px;letter-spacing:-.4px}
+.stat .n small{font-size:14px;margin-left:4px}
+.stat .f{font-size:14px;line-height:20px;margin-top:8px}
+.tb{font-size:14px;line-height:20px}
+.tb th{font-size:12px;line-height:16px;letter-spacing:1.4px}
+.tl .c{font-size:14px;line-height:20px}
+.tl .tm{font-size:12px;line-height:16px}
+.rec .t{font-size:16px;line-height:24px}
+.rec .m{font-size:12px;line-height:16px}
+.rec .p{font-size:14px;line-height:20px}
+label.f{font-size:12px;line-height:16px;letter-spacing:1px;margin:16px 0 8px}
+.field-err{font-size:14px;line-height:20px;margin-top:8px}
+
+/* 间距：只用 2/4/8/12/16/24/32/40/48/64/80/96 */
+main{padding:24px 32px 64px;background:var(--paper)}
+aside{padding:24px 16px 16px;gap:4px}
+.brand{padding:0 8px 24px;gap:12px}
+.brand .logo{font-size:20px;line-height:28px;letter-spacing:2px}
+.brand .slogan{font-size:12px;line-height:16px;letter-spacing:.8px}
+.ver{font-size:12px;line-height:16px;border-radius:6px;padding:2px 4px;letter-spacing:.5px}
+.navsec{font-size:12px;line-height:16px;letter-spacing:1.6px;padding:24px 12px 8px}
+.navlist{display:flex;flex-direction:column;gap:4px}
+.navi{padding:8px 12px;border-radius:8px;font-size:14px;line-height:20px;letter-spacing:0;
+  transition:background-color .3s var(--ease),color .3s var(--ease),transform .3s var(--ease)}
+.navi .cnt{font-size:12px;line-height:16px}
+.who{padding:16px 8px 0;margin-top:8px}
+.who .nm{font-size:14px;line-height:20px}
+.who .bd,.who .kv,.linkbtn{font-size:12px;line-height:16px}
+.who .kv{margin-top:12px}
+.avatar{width:32px;height:32px;font-size:12px;border-radius:8px}
+.topbar{gap:12px;margin-bottom:24px}
+.page-head{margin-bottom:24px;gap:16px}
+.chips{gap:8px;margin-bottom:24px}
+.rec{gap:12px;padding:12px 0}
+.tl{gap:12px;padding:12px 0}
+.sep{margin:16px 0}
+.mt6{margin-top:8px}.mt10{margin-top:12px}.mt14{margin-top:16px}.mt18{margin-top:24px}.mt20{margin-top:24px}.mt24{margin-top:24px}
+.grid{gap:16px}.grid3{gap:16px}.grid4{gap:16px}
+.card{padding:24px;border-radius:16px;transition:transform .5s var(--ease),box-shadow .3s var(--ease),border-color .3s var(--ease)}
+.section{padding:24px;border-radius:16px}
+.task{padding:24px}
+.mod{padding:24px}
+.task .foot{margin-top:16px;padding-top:16px;gap:12px}
+.mod .desc{margin-top:8px;min-height:40px;font-size:14px;line-height:20px}
+.mod .cnt{font-size:12px;line-height:16px;color:var(--muted)}
+.bar{margin-top:12px}
+.mod .go{padding-top:16px;font-size:12px;line-height:16px}
+.ico{width:32px;height:32px;border-radius:8px}
+.empty{padding:64px 16px;font-size:16px;border-radius:16px}
+
+/* 圆角：只用 4/6/8/12/16；控件 8 */
+input,select,textarea{border-radius:8px;padding:8px 12px;font-size:16px;line-height:24px;transition:border-color .3s var(--ease),box-shadow .3s var(--ease)}
+textarea{min-height:80px}
+.btn{padding:8px 12px;border-radius:8px;font-size:16px;line-height:24px;font-weight:600;letter-spacing:0;
+  transition:background-color .3s var(--ease),box-shadow .3s var(--ease),transform .3s var(--ease)}
+.btn:active{transform:scale(.98)}
+.btn.sm{padding:6px 12px;border-radius:8px;font-size:14px;line-height:20px}
+.seg{padding:4px;border-radius:12px;gap:0}
+.seg button{padding:6px 12px;border-radius:8px;font-size:14px;line-height:20px;letter-spacing:0;
+  transition:background-color .3s var(--ease),color .3s var(--ease),transform .3s var(--ease)}
+.fchip{padding:6px 12px;border-radius:8px;font-size:14px;line-height:20px;letter-spacing:0;
+  transition:border-color .3s var(--ease),color .3s var(--ease),transform .3s var(--ease)}
+.fchip .c{font-size:12px;margin-left:4px}
+.modal .box{border-radius:16px;padding:24px;max-width:520px}
+.toast{padding:12px 16px;border-radius:8px;font-size:14px;line-height:20px;transition:opacity .3s var(--ease),transform .3s var(--ease)}
+.demo-tag{font-size:12px;line-height:16px;padding:2px 8px;border-radius:6px;letter-spacing:.5px}
+.mark{background:var(--g-d);border-radius:8px}
+
+/* 卡片内引用块：不用单边描边 */
+.task .note{margin-top:12px;padding:12px;border-left:0;border-radius:8px;background:#FAF9F5;color:var(--ink2)}
+.task .head{gap:8px}
+.task .title{margin-top:8px}
+
+/* 首屏：左侧结论，右侧四模块集成面板 */
+.home-grid{display:grid;grid-template-columns:minmax(0,1fr) 392px;gap:32px;align-items:start}
+.home-left{min-width:0}
+.hero{max-width:none}
+.hero .lead{margin-top:8px}
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:32px}
+.metrics .stat{padding:20px;min-width:0}
+
+.modpanel{background:var(--white);border:1px solid var(--line);border-radius:16px;box-shadow:var(--sh);overflow:hidden;padding:0}
+.modpanel .ph{display:flex;align-items:center;gap:12px;padding:16px 24px;border-bottom:1px solid var(--line2);background:#FBFAF6}
+.modpanel .ph .eyebrow{font-size:12px;line-height:16px;letter-spacing:1.4px}
+.modpanel .ph .mini{margin-left:auto;font-variant-numeric:tabular-nums}
+.modrow{display:flex;align-items:center;gap:12px;padding:14px 24px;border-bottom:1px solid var(--line2);position:relative;transition:background-color .3s var(--ease)}
+.modrow:last-of-type{border-bottom:0}
+.modrow:hover{background:#FBFAF6}
+.modrow .ic{width:36px;height:36px;border-radius:10px;background:var(--g-l);color:var(--g-d);display:flex;align-items:center;justify-content:center;flex:0 0 36px}
+.modrow .tx{flex:1;min-width:0}
+.modrow .nm{display:block;font-size:16px;line-height:24px;font-weight:600}
+.modrow .ds{display:block;font-size:12px;line-height:18px;color:var(--muted);margin-top:2px}
+.modrow .ct{font-size:12px;line-height:16px;color:var(--g-d);background:var(--g-l);border:1px solid var(--g-line);border-radius:6px;padding:2px 8px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.modrow .chev{display:flex;color:var(--muted);transition:transform .3s var(--ease),color .3s var(--ease)}
+.modrow:hover .chev{transform:translateX(3px);color:var(--g-d)}
+.modpanel .pf{padding:12px 24px 14px;border-top:1px solid var(--line2);font-size:12px;line-height:18px;color:var(--muted)}
+.modpanel .pf b{color:var(--g-d);font-weight:600}
+
+/* 主张区：逐词点亮（收进左栏，不再单独占一条横带） */
+.tagline{margin-top:40px;padding:20px 0 0;border-top:1px solid var(--line);max-width:none}
+.tagline p{font-size:22px;line-height:32px;font-weight:600;letter-spacing:0;color:var(--ink);margin:0}
+.tagline p + p{margin-top:8px}
+.tagline .w{display:inline-block;opacity:.28;transform:translateY(4px);
+  transition:opacity .5s var(--ease),transform .5s var(--ease)}
+.tagline .w.on{opacity:1;transform:none}
+
+/* 进场：位移 + 淡入，只动 transform / opacity */
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+.inner{animation:pageIn .5s var(--ease) both}
+
+/* 隐私态：取件码遮罩 */
+.code{font-weight:600;color:var(--ink);letter-spacing:1px}
+.lock{display:inline-flex;align-items:center;gap:6px;font-size:12px;line-height:16px;color:var(--muted);
+  background:#F3F2EC;border-radius:6px;padding:2px 8px;letter-spacing:.3px;vertical-align:1px}
+.lock svg{opacity:.65}
+.lock.ok{background:var(--g-l);color:var(--g-d);font-weight:600}
+.lock.ok svg{opacity:1}
+.lock.warn{background:#FBF3E4;color:#8A5A16}
+
+/* 账户头 / 资产钱包 / 折叠规则 */
+.idcard{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding:8px 0 0}
+.idcard .av{width:56px;height:56px;border-radius:16px;background:var(--g-l);color:var(--g-d);display:flex;align-items:center;justify-content:center;font-size:24px;line-height:32px;font-weight:600}
+.idcard .nm{display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-size:24px;line-height:32px;font-weight:600}
+.idcard .sub{margin-top:4px;font-size:14px;line-height:20px;color:var(--muted)}
+.wallet{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.wallet .asset .k{font-size:12px;line-height:16px;letter-spacing:1.4px;color:var(--muted)}
+.wallet .asset .n{font-size:30px;line-height:36px;font-weight:600;margin-top:8px}
+.wallet .asset .n small{font-size:14px;font-weight:500;color:var(--muted);margin-left:4px}
+.wallet .asset .f{margin-top:12px;font-size:14px;line-height:20px;color:var(--muted)}
+.fold{padding:0}
+.fold summary{display:flex;align-items:center;gap:12px;padding:24px;cursor:pointer;list-style:none}
+.fold summary::-webkit-details-marker{display:none}
+.fold summary .chev{margin-left:auto;display:flex;color:var(--muted);transform:rotate(90deg);transition:transform .3s var(--ease)}
+.fold[open] summary .chev{transform:rotate(-90deg)}
+.fold[open] summary{padding-bottom:0}
+.foldbody{padding:16px 24px 24px}
+.fold summary:focus-visible{outline:2px solid rgba(11,95,65,.42);outline-offset:2px;border-radius:16px}
+.fold summary:hover{background:rgba(11,95,65,.045);border-radius:16px}
+.fold summary:hover .chev{color:var(--g-d)}
+.entry{display:flex;align-items:center;justify-content:space-between;gap:16px;text-decoration:none;color:var(--ink)}
+.rules{display:grid;gap:12px}
+.rules .r{display:flex;gap:12px;font-size:14px;line-height:20px}
+.rules .r b{flex:0 0 20px;color:var(--g-d);font-weight:600}
+@media (min-width:761px){.resetbtn{display:none}}
+
+/* 接单工作台 */
+.job .title{font-size:18px;line-height:28px;font-weight:600;margin-top:12px}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:16px}
+.steps .st i{display:block;height:4px;border-radius:2px;background:#E7E5DE}
+.steps .st.on i{background:var(--g)}
+.steps .st b{display:block;margin-top:8px;font-size:12px;line-height:16px;font-weight:500;color:var(--muted)}
+.steps .st.on b{color:var(--g-d);font-weight:600}
+.codebox{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:16px;padding:16px 24px;border-radius:16px;background:#F6F5F1}
+.codebox .lb{font-size:12px;line-height:16px;letter-spacing:1.4px;color:var(--muted);margin-bottom:8px}
+.codebox .cd{font-size:30px;line-height:36px;font-weight:600;letter-spacing:2px}
+.jobinfo{display:grid;gap:8px;margin-top:16px}
+.jobinfo .r{display:flex;gap:12px;font-size:14px;line-height:20px}
+.jobinfo .r .k{flex:0 0 64px;color:var(--muted)}
+.jobacts{display:flex;align-items:center;gap:8px;margin-top:16px;flex-wrap:wrap}
+.jobacts .btn{white-space:nowrap}
+.job .mini{margin-top:12px}
+.pick{display:flex;gap:12px;align-items:flex-start;padding:12px;border-radius:8px;background:#F6F5F1;font-size:14px;line-height:20px}
+.pick .pk{font-size:12px;line-height:16px;padding:2px 8px;border-radius:6px;background:var(--g-l);color:var(--g-d);white-space:nowrap}
+
+/* 可达性：跳转链接 + 焦点环 */
+.skip{position:fixed;left:16px;top:16px;z-index:80;transform:translateY(-200%);background:var(--g-d);color:#fff;
+  padding:12px 16px;border-radius:8px;font-size:14px;transition:transform .3s var(--ease)}
+.skip:focus{transform:none}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{
+  outline:2px solid rgba(11,95,65,.42);outline-offset:2px}
+
+@media (max-width:980px){
+  .app{display:block;width:100%;max-width:100vw;overflow-x:hidden}
+  main{min-width:0;max-width:100vw;overflow-x:hidden}
+  aside{position:sticky;top:0;z-index:20;height:auto;flex-direction:row;flex-wrap:nowrap;align-items:center;
+    gap:12px;padding:12px 16px;border-right:0;border-bottom:1px solid var(--line);overflow-x:auto;max-width:100vw}
+  aside .brand{padding:0;flex:0 0 auto}
+  aside .brand .slogan{display:none}
+  aside .navsec,aside .who .kv,.side-flex{display:none}
+  .navlist{flex-direction:row;gap:4px;flex:0 0 auto;-webkit-mask-image:linear-gradient(90deg,#000 90%,rgba(0,0,0,.1));mask-image:linear-gradient(90deg,#000 90%,rgba(0,0,0,.1))}
+  .navi{padding:6px 8px;white-space:nowrap}
+  aside .who{border:0;padding:0;margin:0;flex:0 0 auto;white-space:nowrap}
+  aside .who .bd{display:none}
+  aside .linkbtn{display:none}
+  main{padding:16px 16px 48px}
+  .section{overflow-x:auto}
+  .home-grid{grid-template-columns:minmax(0,1fr);gap:24px}
+  .home-grid>*{min-width:0}
+  .modpanel{min-width:0}
+}
+@media (max-width:760px){
+  .grid,.grid3,.grid4{grid-template-columns:1fr!important}
+  .metrics{grid-template-columns:repeat(3,1fr);gap:8px;margin-top:24px}
+  .wallet{grid-template-columns:repeat(2,1fr);gap:12px}
+  .wallet .asset .n{font-size:24px;line-height:32px}
+  .idcard .nm{font-size:20px;line-height:28px}
+  .fold summary{padding:16px}
+  .foldbody{padding:8px 16px 16px}
+  .entry .mini{display:none}
+  .metrics .stat{padding:14px 10px}
+  .metrics .stat .k{font-size:12px;letter-spacing:.8px}
+  .metrics .stat .n{font-size:22px;line-height:28px;margin-top:4px}
+  .metrics .stat .n{font-size:24px;line-height:32px;margin-top:4px}
+  .metrics .stat .f{display:none}
+  .idcard .nums{width:100%;margin-left:0;justify-content:space-between;gap:16px}
+  .idcard .nums .it{text-align:left}
+  .idcard .nm{font-size:20px;line-height:28px}
+  .codebox{padding:16px}
+  .codebox .cd{font-size:24px;line-height:32px;letter-spacing:1px}
+  .pick{display:block}
+  .jobacts{flex-direction:column;align-items:stretch;gap:12px}
+  .jobacts .spacer{display:none}
+  .jobacts .note{order:2}
+  .lead{font-size:24px;line-height:32px}
+  .h1{font-size:20px;line-height:28px}
+  .stat .n{font-size:24px;line-height:32px}
+  .tagline{margin-top:32px;padding:16px 0 0}
+  .tagline p{font-size:18px;line-height:26px}
+  .modpanel .ph,.modrow,.modpanel .pf{padding-left:16px;padding-right:16px}
+  .card,.section,.task,.mod{padding:16px}
+  .mod .desc{min-height:0;margin-top:8px}
+  .mod .go{padding-top:12px}
+  .topbar{gap:8px;margin-bottom:16px}
+  .topbar .crumb{display:none}
+  .demo-tag{display:none}
+  .topbar .btn{margin-left:auto}
+  .tb{white-space:nowrap}
+  .page-head{gap:8px;margin-bottom:16px}
+}
+@media (prefers-reduced-motion:reduce){
+  .inner{animation:none}
+  .reveal{opacity:1;transform:none}
+  .tagline .w{opacity:1;transform:none}
+  *{transition-duration:.01ms!important;animation-duration:.01ms!important}
+}
+/* 微交互与细节（taste 规则 5：只动 transform / opacity，不抢戏） */
+.btn:hover:not(:disabled){transform:translateY(-1px)}
+.btn:active:not(:disabled){transform:translateY(0) scale(.985)}
+.card.hover:hover,.entry:hover{transform:translateY(-2px)}
+.tb tbody tr{transition:background-color .25s var(--ease)}
+.tb tbody tr:hover{background:#FBFAF6}
+.navi:hover{transform:translateX(2px)}
+.seg button:hover:not(.on){background:rgba(11,95,65,.055)}
+.linkbtn{position:relative;display:inline-block}
+.linkbtn::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:1px;background:currentColor;opacity:.55;
+  transform:scaleX(0);transform-origin:0 50%;transition:transform .32s var(--ease)}
+.linkbtn:hover::after,.linkbtn:focus-visible::after{transform:scaleX(1)}
+/* 数字等宽：数值刷新时不左右挪位 */
+.stat .n,.wallet .asset .n,.price,.code,.codebox .cd,.tb td b{font-variant-numeric:tabular-nums}
+/* 首屏一次性入场：逐块 64ms 递进，只跑一次 */
+@keyframes enterUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.enter{animation:enterUp .62s var(--ease) var(--d,0ms) both}
+html{scroll-behavior:smooth}
+::selection{background:rgba(11,95,65,.15)}
+@media (prefers-reduced-motion:reduce){.enter{animation:none}}
 </style>
 </head>
 <body>
@@ -218,7 +515,7 @@ label.f{display:block;font-size:11px;color:var(--muted);margin:14px 0 5px;letter
 <script>
 /* ================= 数据 ================= */
 var DB_KEY = 'xiaolin_demo_v5';
-var BUILDINGS = ['1 号楼','2 号楼','3 号楼','4 号楼','5 号楼','6 号楼','7 号楼','8 号楼','八公寓'];
+var BUILDINGS = ['1 宿舍','2 宿舍','3 宿舍','4 宿舍','5 宿舍','6 宿舍','7 宿舍','8 宿舍','八公寓'];
 var PLATFORM_RATE = 0.05, PLATFORM_CAP = 3;
 var ME = '游客本人';
 
@@ -245,39 +542,42 @@ function catName(k){
 
 function seed(){
   return {
-    user:{ name:ME, building:'6 号楼', role:'student', guest:true, coins:6, score:82 },
+    user:{ name:ME, building:'1 宿舍', role:'student', guest:true, coins:6, score:82, sid:'', sidVerified:false },
     tasks:[
-      {id:'t1', type:'express', title:'三号门取圆通 1 件', from:'李同学', building:'6 号楼', slot:'12:00–13:00',
+      {id:'t1', type:'express', title:'三号门取圆通 1 件', from:'李同学', building:'1 宿舍', slot:'12:00–13:00',
        mode:'free', fee:0, code:'8-2-3021', note:'下课顺路带一下就行，回来请你喝一杯', status:'open', verified:true, createdAt:nowMinus(24)},
-      {id:'t2', type:'express', title:'菜鸟驿站取中通 2 件（大件）', from:'王同学', building:'8 号楼', slot:'17:30–18:30',
+      {id:'t2', type:'express', title:'菜鸟驿站取中通 2 件（大件）', from:'王同学', building:'8 宿舍', slot:'17:30–18:30',
        mode:'paid', fee:3, code:'A-1-1188 / A-1-1189', note:'两件有点重，跨楼栋，愿意付 3 元', status:'open', verified:true, createdAt:nowMinus(48)},
-      {id:'t3', type:'errand', title:'二楼食堂带一份鸡腿饭', from:'陈同学', building:'4 号楼', slot:'17:30–18:30',
+      {id:'t3', type:'errand', title:'二楼食堂带一份鸡腿饭', from:'陈同学', building:'4 宿舍', slot:'17:30–18:30',
        mode:'paid', fee:4, note:'不要辣，饭盒钱我出', status:'open', verified:false, createdAt:nowMinus(90)},
-      {id:'t4', type:'help', title:'借一片退烧药', from:'刘同学', building:'6 号楼', slot:'现在',
+      {id:'t4', type:'help', title:'借一片退烧药', from:'刘同学', building:'1 宿舍', slot:'现在',
        mode:'free', fee:0, note:'室友发烧，先借一片布洛芬，明天还一板', status:'open', verified:true, createdAt:nowMinus(12)},
-      {id:'t5', type:'express', title:'三号门取顺丰 1 件', from:'赵同学', building:'2 号楼', slot:'12:00–13:00',
+      {id:'t5', type:'express', title:'三号门取顺丰 1 件', from:'赵同学', building:'2 宿舍', slot:'12:00–13:00',
        mode:'free', fee:0, code:'SF-7781', note:'中午回宿舍顺路即可', status:'open', verified:true, createdAt:nowMinus(64)},
-      {id:'t6', type:'help', title:'帮看 10 分钟行李', from:'孙同学', building:'1 号楼', slot:'15:30–16:00',
+      {id:'t6', type:'help', title:'帮看 10 分钟行李', from:'孙同学', building:'1 宿舍', slot:'15:30–16:00',
        mode:'free', fee:0, note:'去一趟打印店，箱子放一楼大厅', status:'open', verified:true, createdAt:nowMinus(35)},
-      {id:'t7', type:'express', title:'三号门取京东 1 件', from:'周同学', building:'6 号楼', slot:'12:00–13:00',
-       mode:'free', fee:0, code:'JD-2299', note:'已放到驿站，今天必须取', status:'delivered', verified:true, createdAt:nowMinus(300), taker:ME, takerBuilding:'6 号楼', deliveredAt:nowMinus(120)},
-      {id:'t8', type:'print', title:'打印店取实验报告 3 份', from:'吴同学', building:'3 号楼', slot:'17:30–18:30',
+      {id:'t7', type:'express', title:'三号门取京东 1 件', from:'周同学', building:'1 宿舍', slot:'12:00–13:00',
+       mode:'free', fee:0, code:'JD-2299', note:'已放到驿站，今天必须取', status:'delivered', verified:true, createdAt:nowMinus(300), taker:ME, takerBuilding:'1 宿舍', deliveredAt:nowMinus(120)},
+      {id:'t8', type:'print', title:'打印店取实验报告 3 份', from:'吴同学', building:'3 宿舍', slot:'17:30–18:30',
        mode:'paid', fee:3, note:'已付过钱，报名字取就行，装订好的', status:'open', verified:true, createdAt:nowMinus(75)},
-      {id:'t9', type:'borrow', title:'借一把十字螺丝刀（装床架）', from:'孙同学', building:'6 号楼', slot:'现在',
+      {id:'t9', type:'borrow', title:'借一把十字螺丝刀（装床架）', from:'孙同学', building:'1 宿舍', slot:'现在',
        mode:'free', fee:0, note:'用完当晚就还，不用钱', status:'open', verified:true, createdAt:nowMinus(18)},
-      {id:'t10', type:'express', title:'三号门取韵达 1 件', from:ME, building:'6 号楼', slot:'12:00–13:00',
+      {id:'t10', type:'express', title:'三号门取韵达 1 件', from:ME, building:'1 宿舍', slot:'12:00–13:00',
        mode:'free', fee:0, code:'YD-5602', note:'中午下课顺手拿一下', status:'open', verified:false, createdAt:nowMinus(8)},
-      {id:'t11', type:'express', title:'三号门取邮政 1 件', from:'李同学', building:'6 号楼', slot:'12:00–13:00',
+      {id:'t11', type:'express', title:'三号门取邮政 1 件', from:'李同学', building:'1 宿舍', slot:'12:00–13:00',
        mode:'free', fee:0, code:'YZ-3390', note:'同栋顺手带，欠一个人情', status:'confirmed', verified:true,
-       createdAt:nowMinus(420), taker:ME, takerBuilding:'6 号楼', confirmedAt:nowMinus(300)}
+       createdAt:nowMinus(420), taker:ME, takerBuilding:'1 宿舍', confirmedAt:nowMinus(300)},
+      {id:'t12', type:'express', title:'东区驿站取顺丰 2 件（跨楼）', from:'郑同学', building:'8 宿舍', slot:'10:00–11:00',
+       mode:'paid', fee:3, code:'SF-2266', note:'两件，跨楼，3 元', status:'confirmed', verified:true,
+       createdAt:nowMinus(620), taker:ME, takerBuilding:'1 宿舍', confirmedAt:nowMinus(600)}
     ],
     items:[
-      {id:'g1', cat:'vehicle', title:'二手自行车（通勤代步）', price:150, cond:'八成新', building:'7 号楼', owner:'吴同学', status:'onsale', note:'锁和打气筒一起给，可先骑两天再决定'},
-      {id:'g2', cat:'digital', title:'护眼台灯（无破损）', price:25, cond:'九成新', building:'6 号楼', owner:'李同学', status:'onsale', note:'毕业清仓，同栋楼下当面看'},
-      {id:'g3', cat:'book', title:'《工程材料》教材', price:15, cond:'有笔记', building:'6 号楼', owner:ME, status:'onsale', note:'课已结，笔记可直接用'},
-      {id:'g4', cat:'digital', title:'吹风机（宿舍可用功率）', price:30, cond:'八成新', building:'3 号楼', owner:'陈同学', status:'sold', note:'已面交'},
-      {id:'g5', cat:'life', title:'折叠收纳箱 2 个', price:20, cond:'九成新', building:'2 号楼', owner:'赵同学', status:'onsale', note:'装过衣服，无异味'},
-      {id:'g6', cat:'life', title:'篮球（7 号，室内外通用）', price:35, cond:'有使用痕迹', building:'1 号楼', owner:'周同学', status:'onsale', note:'气足，打过一学期'}
+      {id:'g1', cat:'vehicle', title:'二手自行车（通勤代步）', price:150, cond:'八成新', building:'7 宿舍', owner:'吴同学', status:'onsale', note:'锁和打气筒一起给，可先骑两天再决定'},
+      {id:'g2', cat:'digital', title:'护眼台灯（无破损）', price:25, cond:'九成新', building:'1 宿舍', owner:'李同学', status:'onsale', note:'毕业清仓，同栋楼下当面看'},
+      {id:'g3', cat:'book', title:'《工程材料》教材', price:15, cond:'有笔记', building:'1 宿舍', owner:ME, status:'onsale', note:'课已结，笔记可直接用'},
+      {id:'g4', cat:'digital', title:'吹风机（宿舍可用功率）', price:30, cond:'八成新', building:'3 宿舍', owner:'陈同学', status:'sold', note:'已面交'},
+      {id:'g5', cat:'life', title:'折叠收纳箱 2 个', price:20, cond:'九成新', building:'2 宿舍', owner:'赵同学', status:'onsale', note:'装过衣服，无异味'},
+      {id:'g6', cat:'life', title:'篮球（7 号，室内外通用）', price:35, cond:'有使用痕迹', building:'1 宿舍', owner:'周同学', status:'onsale', note:'气足，打过一学期'}
     ],
     docs:[
       {id:'d1', title:'高等数学（上）期末真题 2024 秋', course:'高等数学', term:'2024 秋', teacher:'王老师', owner:'李同学', downloads:36},
@@ -288,6 +588,7 @@ function seed(){
     ],
     ledger:[
       {id:'l1', ts:nowMinus(300), text:'公益单完成 · 三号门取邮政，+1 时间币', kind:'coin', amount:1},
+      {id:'l0', ts:nowMinus(590), text:'有偿单完成 · 东区驿站取顺丰 2 件 3 元', kind:'cash', amount:2.85},
       {id:'l2', ts:nowMinus(600), text:'服务费 · 跨楼有偿 3 元 × 5%', kind:'fee', amount:0.15},
       {id:'l3', ts:nowMinus(900), text:'额度支出 · 工程材料重点整理', kind:'credit', amount:-1}
     ],
@@ -307,6 +608,8 @@ function load(){
   if(typeof db.credits !== 'number') db.credits = 3;
   if(typeof db.user.coins !== 'number') db.user.coins = 6;
   if(!db.user.role) db.user.role = 'student';
+  if(typeof db.user.sid !== 'string') db.user.sid = '';
+  if(typeof db.user.sidVerified !== 'boolean') db.user.sidVerified = false;
   save();
 }
 function save(){ try{ localStorage.setItem(DB_KEY, JSON.stringify(db)); }catch(e){} }
@@ -355,6 +658,9 @@ var ICONS = {
   docs:'<path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 12h6M9 16h4"/>',
   help:'<path d="M12 20s-7-4.3-7-9a4 4 0 0 1 7-2.3A4 4 0 0 1 19 11c0 4.7-7 9-7 9z"/>',
   me:'<circle cx="12" cy="8" r="3.2"/><path d="M5 20c0-3.6 3-6.2 7-6.2s7 2.6 7 6.2"/>',
+  doing:'<path d="M7 4h10a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/><path d="M9 3.5h6v3H9z"/><path d="M8.5 13l2.5 2.5 4.5-5"/>',
+  clock:'<circle cx="12" cy="12" r="8"/><path d="M12 8v4.5l3 1.8"/>',
+  copy:'<rect x="9" y="8" width="11" height="12" rx="2"/><path d="M15 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h3"/>',
   lead:'<circle cx="8" cy="8" r="3"/><path d="M2.5 20c0-3.3 2.5-6 5.5-6s5.5 2.7 5.5 6"/><path d="M15 5.5a3 3 0 0 1 0 5.5M17 20c0-2-.6-3.7-1.7-5"/>',
   data:'<path d="M4 20V4"/><path d="M4 20h16"/><path d="M8 16v-5M12 16V8M16 16v-3"/>',
   arrow:'<path d="M4 12h12M12 6l6 6-6 6"/>',
@@ -366,20 +672,22 @@ function ic(name, size){
 }
 
 /* ================= 布局 ================= */
-var PAGE_TITLE = {home:'总览', market:'任务集市', goods:'闲置流转', docs:'资料共享', help:'临时帮扶', me:'我的', lead:'邻长工作台', data:'平台数据'};
+var PAGE_TITLE = {home:'总览', market:'任务集市', doing:'我的接单', goods:'闲置流转', docs:'资料共享', help:'临时帮扶', me:'我的', lead:'邻长工作台', data:'平台数据'};
 
 function layout(active, body){
   var u = db.user, lead = isLead();
-  var openTask = db.tasks.filter(function(t){ return t.status==='open'; }).length;
+  var openTask = db.tasks.filter(function(t){ return t.status==='open' && t.type!=='help'; }).length;
+  var myActive = db.tasks.filter(function(t){ return t.taker===u.name && (t.status==='taken'||t.status==='delivered'); }).length;
   var onsale = db.items.filter(function(g){ return g.status!=='sold'; }).length;
   var nav = [
     ['home','首页','home', 0],
     ['market','任务集市','market', lead ? db.tasks.filter(function(t){ return t.building===u.building && t.status!=='closed' && t.type!=='help'; }).length : openTask],
     ['goods','闲置流转','goods', onsale],
     ['docs','资料共享','docs', db.docs.length],
-    ['help','临时帮扶','help', db.tasks.filter(function(t){ return t.type==='help' && t.status==='open'; }).length],
-    ['me','我的','me', 0]
+    ['help','临时帮扶','help', db.tasks.filter(function(t){ return t.type==='help' && t.status==='open'; }).length]
   ];
+  if(!lead) nav.push(['doing','我的接单','doing', myActive]);
+  nav.push(['me','我的','me', 0]);
   var adminNav = [
     ['lead','邻长工作台','lead', db.tasks.filter(function(t){ return t.building===u.building && !t.verified; }).length],
     ['data','平台数据','data', 0]
@@ -389,18 +697,19 @@ function layout(active, body){
       '<span>' + n[1] + '</span>' + (n[3] ? '<span class="cnt">' + n[3] + '</span>' : '') + '</a>';
   }
 
-  return '<aside>' +
+  return '<a class="skip" href="#main">跳到主要内容</a>' +
+      '<aside>' +
       '<div class="brand"><div class="mark"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round"><path d="M12 3.5 4 8v9l8 4.5 8-4.5v-9z"/><path d="M4 8l8 4.5L20 8"/></svg></div>' +
         '<div><div class="logo">校邻<span class="ver">体验版</span></div><div class="slogan">校园互助便民服务</div></div></div>' +
-      nav.map(item).join('') +
-      (lead ? '<div class="navsec">管理 · 演示</div>' + adminNav.map(item).join('') : '') +
+      '<nav class="navlist" aria-label="主导航">' + nav.map(item).join('') + '</nav>' +
+      (lead ? '<div class="navsec">管理 · 演示</div><nav class="navlist" aria-label="管理导航">' + adminNav.map(item).join('') + '</nav>' : '') +
       '<div class="side-flex"></div>' +
       '<div class="who"><div class="top"><div class="avatar">游</div><div style="flex:1"><div class="nm">' + esc(u.name) + '</div>' +
         '<div class="bd">' + esc(u.building) + ' · ' + (lead?'邻长':'学生') + '</div></div></div>' +
         '<div class="kv"><span>时间币 <b>' + u.coins + '</b></span><span>信用 <b>' + u.score + ' ' + level(u.score) + '</b></span></div>' +
         '<button class="linkbtn" data-act="identity">切换楼栋 / 重置</button></div>' +
     '</aside>' +
-    '<main><div class="inner">' +
+    '<main id="main" tabindex="-1"><div class="inner">' +
       '<div class="topbar"><div class="crumb">校邻 / ' + PAGE_TITLE[active] + '</div><div class="spacer"></div>' +
         '<div class="seg"><button data-act="role" data-v="student" class="' + (!lead?'on':'') + '">学生视角</button>' +
           '<button data-act="role" data-v="lead" class="' + (lead?'on':'') + '">邻长视角</button></div>' +
@@ -410,8 +719,16 @@ function layout(active, body){
     '</div></main>';
 }
 
-function chipsHTML(active, list, key, total){
-  var out = '<button class="fchip ' + (active==='all'?'on':'') + '" data-act="filter" data-key="' + key + '" data-val="all">全部<span class="c">' + total + '</span></button>';
+/* 可折叠区块：默认收起，点标题展开 */
+function foldSection(title, note, inner, open){
+  return '<details class="section fold mt16"' + (open ? ' open' : '') + '>' +
+    '<summary><span class="h2">' + title + '</span>' +
+    (note ? '<span class="mini">' + note + '</span>' : '') +
+    '<span class="chev">' + ic('arrow', 16) + '</span></summary>' +
+    '<div class="foldbody">' + inner + '</div></details>';
+}
+
+function chipsHTML(active, list, key, total){  var out = '<button class="fchip ' + (active==='all'?'on':'') + '" data-act="filter" data-key="' + key + '" data-val="all">全部<span class="c">' + total + '</span></button>';
   list.forEach(function(c){
     out += '<button class="fchip ' + (active===c.k?'on':'') + '" data-act="filter" data-key="' + key + '" data-val="' + c.k + '">' + c.n + '<span class="c">' + c.count + '</span></button>';
   });
@@ -431,30 +748,40 @@ function viewHomeStudent(){
 
   var mods = [
     {ic:'market', nm:'快递代取', n:'market', desc:'同楼顺手带，跨楼赶时间才计价',
-     cnt: db.tasks.filter(function(t){ return t.type!=='help'; }).length + ' 条'},
+     cnt: open.length + ' 单可接'},
     {ic:'goods', nm:'闲置流转', n:'goods', desc:'同楼栋优先，当面验货',
      cnt: db.items.filter(function(g){ return g.status!=='sold'; }).length + ' 件'},
     {ic:'docs', nm:'资料共享', n:'docs', desc:'上传换额度，署名保留',
      cnt: db.docs.length + ' 份'},
     {ic:'help', nm:'临时帮扶', n:'help', desc:'借药、看行李、雨天送伞',
-     cnt: db.tasks.filter(function(t){ return t.type==='help'; }).length + ' 条'}
+     cnt: db.tasks.filter(function(t){ return t.type==='help' && t.status==='open'; }).length + ' 条'}
   ];
 
   var body =
-    '<div class="hello"><div class="eyebrow">' + esc(u.building) + ' · 游客体验</div>' +
-      '<div class="lead">今天有 <em>' + open.filter(function(t){ return fitScore(t)>=5; }).length + '</em> 单和你顺路</div></div>' +
-    '<div class="dash"><div class="txt"><h3>顺手带一件事，不用专门跑一趟</h3>' +
-      '<p>只对跨楼栋、赶时间的服务计价。</p></div>' +
-      '<div class="metrics">' +
-        '<div><div class="n">' + open.length + '</div><div class="t">待接</div></div>' +
-        '<div><div class="n">' + db.docs.reduce(function(a,d){ return a + d.downloads; },0) + '</div><div class="t">资料取用</div></div>' +
-        '<div><div class="n">' + level(u.score) + '</div><div class="t">信用等级</div></div>' +
-      '</div></div>' +
-    '<div class="grid4 mt24">' + mods.map(function(m){
-      return '<a class="card hover mod" href="#' + m.n + '"><div class="top"><div class="ico">' + ic(m.ic, 15) + '</div>' +
-        '<div class="nm">' + m.nm + '</div><div class="cnt">' + m.cnt + '</div></div>' +
-        '<div class="desc">' + m.desc + '</div><div class="go">进入模块 ' + ic('arrow', 12) + '</div></a>';
-    }).join('') + '</div>' +
+    '<div class="home-grid"><div class="home-left">' +
+    '<div class="hero"><div class="eyebrow">' + esc(u.building) + ' · 游客体验</div>' +
+      '<h1 class="lead">今天有 <em>' + open.filter(function(t){ return fitScore(t)>=5; }).length + '</em> 单和你顺路</h1>' +
+      '<p class="sub">同楼顺手带，跨楼赶时间才计价。接一单，记一次。</p></div>' +
+    '<div class="metrics">' +
+      '<div class="card stat"><div class="k">待接单</div><div class="n">' + db.tasks.filter(function(t){ return t.status==='open' && t.type!=='help'; }).length + '<small>单</small></div><div class="f">全平台待接</div></div>' +
+      '<div class="card stat"><div class="k">资料取用</div><div class="n">' + db.docs.reduce(function(a,d){ return a + d.downloads; },0) + '<small>次</small></div><div class="f">上传一份换 2 次</div></div>' +
+      '<div class="card stat"><div class="k">信用等级</div><div class="n">' + level(u.score) + '<small>' + u.score + ' 分</small></div><div class="f">完成一单 +2</div></div>' +
+    '</div>' +
+    '<section class="tagline" aria-label="平台主张">' +
+      '<p><span class="w">顺路的事，</span><span class="w">交给顺路的人。</span></p>' +
+      '<p><span class="w">钱只出现在跨楼赶时单，</span><span class="w">其余都记时间币。</span></p>' +
+    '</section>' +
+    '</div>' +
+    '<section class="modpanel" aria-label="四个模块入口">' +
+      '<div class="ph"><span class="eyebrow">四个模块 · 一个入口</span><span class="mini">今日在办 ' + open.length + ' 单</span></div>' +
+      mods.map(function(m){
+        return '<a class="modrow" href="#' + m.n + '"><span class="ic">' + ic(m.ic, 18) + '</span>' +
+          '<span class="tx"><span class="nm">' + m.nm + '</span><span class="ds">' + m.desc + '</span></span>' +
+          '<span class="ct">' + m.cnt + '</span><span class="chev">' + ic('arrow', 16) + '</span></a>';
+      }).join('') +
+      '<div class="pf"><b>同楼顺手带</b>，跨楼才计价；人情优先。</div>' +
+    '</section>' +
+    '</div>' +
     '<div class="grid mt24" style="grid-template-columns:1.4fr 1fr;align-items:start">' +
       '<div class="section"><div class="row between"><div><div class="eyebrow">今日顺路</div><div class="h2 mt6">这几单，和你行程重叠</div></div>' +
         '<a href="#market" class="link">查看全部</a></div>' +
@@ -486,19 +813,14 @@ function viewHomeLead(){
   var todayPaid = db.ledger.filter(function(l){ return l.kind==='fee' && l.ts > Date.now()-86400000; }).length;
 
   var body =
-    '<div class="hello"><div class="eyebrow">' + esc(bd) + ' · 邻长视角 · 运营台</div>' +
-      '<div class="lead">你手上有 <em>' + unverify.length + '</em> 条待核验</div></div>' +
-    '<div class="dash"><div class="txt"><h3>先看异常，再看热闹</h3>' +
-      '<p>待核验的单会挡在推荐位外。</p></div>' +
-      '<div class="metrics">' +
-        '<div><div class="n">' + unverify.length + '</div><div class="t">待核验</div></div>' +
-        '<div><div class="n">' + ongoing.length + '</div><div class="t">进行中</div></div>' +
-        '<div><div class="n">' + money(ledgerSum('fee')) + '</div><div class="t">服务费(元)</div></div>' +
-      '</div></div>' +
-    '<div class="grid3 mt24">' +
-      '<div class="card stat"><div class="k">本栋住户</div><div class="n">≈1,000<small>人</small></div><div class="f">一栋 2 名邻长</div></div>' +
-      '<div class="card stat"><div class="k">今日有偿单</div><div class="n">' + todayPaid + '<small>单 / 门槛 20</small></div><div class="bar warn"><i style="width:' + Math.min(100, todayPaid/20*100) + '%"></i></div></div>' +
-      '<div class="card stat"><div class="k">待处理</div><div class="n">' + (unverify.length + mine.filter(function(t){ return t.status==='delivered'; }).length) + '<small>项</small></div><div class="f">未核验 + 未确认</div></div>' +
+    '<div class="hero"><div class="eyebrow">' + esc(bd) + ' · 邻长视角</div>' +
+      '<h1 class="lead">你手上有 <em>' + unverify.length + '</em> 条待核验</h1>' +
+      '<p class="sub">待核验的单不进推荐位。先过一遍，再看数据。</p></div>' +
+    '<div class="metrics">' +
+      '<div class="card stat"><div class="k">待核验</div><div class="n">' + unverify.length + '<small>条</small></div><div class="f">核验后进推荐位</div></div>' +
+      '<div class="card stat"><div class="k">今日有偿单</div><div class="n">' + todayPaid + '<small>单 / 门槛 20</small></div>' +
+        '<div class="bar warn"><i style="width:' + Math.min(100, todayPaid/20*100) + '%"></i></div></div>' +
+      '<div class="card stat"><div class="k">服务费累计</div><div class="n">' + money(ledgerSum('fee')) + '<small>元</small></div><div class="f">跨楼单 5%，封顶 3 元</div></div>' +
     '</div>' +
     '<div class="section mt24"><div class="row between"><div><div class="eyebrow">本栋清单</div><div class="h2 mt6">需要你过手的单</div></div>' +
       '<a href="#lead" class="link">进工作台</a></div>' +
@@ -517,7 +839,12 @@ function viewHomeLead(){
 function viewMarket(){
   var u = db.user, lead = isLead();
   var list = db.tasks.filter(function(t){ return t.type !== 'help'; });
-  if(lead) list = list.filter(function(t){ return t.building === u.building; });
+  if(lead){
+    list = list.filter(function(t){ return t.building === u.building && t.status !== 'closed'; });
+  } else {
+    /* 大厅只放还没人接的单：被接走即从大厅消失，转到接单人的「我的接单」 */
+    list = list.filter(function(t){ return t.status === 'open'; });
+  }
   var shown = list.filter(function(t){ return filter.market==='all' || t.type===filter.market; });
   shown.sort(function(a,b){
     var am = (a.status==='open')?1:0, bm = (b.status==='open')?1:0;
@@ -539,10 +866,22 @@ function viewMarket(){
   return layout('market', body);
 }
 
+/* 隐私：取件码 / 门牌只对发起人和接单人可见 */
+var LOCK_SVG = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="4.5" y="10.5" width="15" height="9.5" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg>';
+function codeVisible(t){
+  var u = db.user;
+  if(!t.code) return false;
+  if(t.from === u.name) return true;
+  if(isLead()) return false;
+  if(t.taker === u.name && (t.status==='taken' || t.status==='delivered' || t.status==='confirmed')) return true;
+  return false;
+}
+
 function taskCard(t){
   var u = db.user, lead = isLead();
   var mine = (t.from === u.name);
   var isTaker = (t.taker === u.name);
+  var codeShown = codeVisible(t);
   var head = '<div class="head"><span class="cat">' + catName(t.type) + '</span><div class="spacer"></div>' +
     '<span class="status ' + (t.status==='open'?'open':(t.status==='confirmed'||t.status==='closed'?'done':'')) + '"><i></i>' + statusText(t.status) + '</span></div>';
 
@@ -574,7 +913,9 @@ function taskCard(t){
   return '<div class="card task hover">' + head +
     '<div class="title">' + esc(t.title) + '</div>' +
     '<div class="meta">' + esc(t.from) + '<span class="dot"></span>' + esc(t.building) + '<span class="dot"></span>' + esc(t.slot) + '</div>' +
-    (t.code ? '<div class="meta mt6">取件码　<b style="color:var(--ink);letter-spacing:.5px">' + esc(t.code) + '</b></div>' : '') +
+    (t.code ? (codeShown
+        ? '<div class="meta mt6">取件码　<b class="code">' + esc(t.code) + '</b>' + (isTaker && !mine ? '<span class="lock ok">已解锁</span>' : '') + '</div>'
+        : '<div class="meta mt6">取件码　<span class="lock">' + LOCK_SVG + '接单后可见</span></div>') : '') +
     (t.note ? '<div class="note mt10">' + esc(t.note) + '</div>' : '') +
     '<div class="foot"><div class="row" style="gap:8px">' + actions + '</div><div class="row" style="gap:8px">' + price +
       '<span class="mini">' + (t.status==='open' && !mine && !lead ? '顺路分 ' + fitScore(t) + ' · ' : '') + fmtTime(t.createdAt) + '</span></div></div>' +
@@ -589,13 +930,13 @@ function openPublish(pref){
   }).join('');
   document.getElementById('modalBox').innerHTML =
     '<div class="eyebrow">发布需求</div>' +
-    '<div class="h1 mt6" style="font-size:19px">一句话说清，顺路的人会接</div>' +
+    '<div class="h1 mt6" style="font-size:20px">一句话说清，顺路的人会接</div>' +
     '<label class="f">分类</label><select id="p-type">' + types + '</select>' +
     '<label class="f">一句话说明 <span style="color:#A05A45">必填</span></label><input id="p-title" placeholder="如：三号门取圆通 1 件">' +
     '<label class="f">取件楼栋 / 地点 <span style="color:#A05A45">必填</span></label>' +
-    '<input id="p-bd" list="bd-list" value="' + esc(db.user.building) + '" placeholder="如：6 号楼、东区三号门驿站">' +
+    '<input id="p-bd" list="bd-list" value="' + esc(db.user.building) + '" placeholder="如：3 宿舍、东区三号门驿站">' +
     '<datalist id="bd-list">' + BUILDINGS.map(function(b){ return '<option value="' + b + '">'; }).join('') + '</datalist>' +
-    '<div class="row mt10"><div style="flex:1"><label class="f" style="margin-top:0">取件码 / 门牌</label><input id="p-code" placeholder="可选，如 8-2-3021"></div>' +
+    '<div class="row mt10"><div style="flex:1"><label class="f" style="margin-top:0">取件码 / 门牌 <span class="lock" style="margin-left:6px">' + LOCK_SVG + '仅接单人可见</span></label><input id="p-code" placeholder="可选，如 8-2-3021"></div>' +
       '<div style="flex:1"><label class="f" style="margin-top:0">时间段 <span style="color:#A05A45">可自填</span></label>' +
       '<input id="p-slot" list="slot-list" value="12:00–13:00" placeholder="如 12:00–13:00、18:30 前">' +
       '<datalist id="slot-list"><option value="现在"><option value="12:00–13:00"><option value="17:30–18:30"><option value="20:00–21:00"><option value="今天 18:30 前"><option value="明天上午"></datalist></div></div>' +
@@ -655,14 +996,113 @@ function openPublish(pref){
 }
 
 /* ================= 流程 ================= */
-function takeTask(id){
+/* ================= 接单：先过学号验证，再进「我的接单」 ================= */
+function activeCount(){
+  return db.tasks.filter(function(x){ return x.taker===db.user.name && (x.status==='taken'||x.status==='delivered'); }).length;
+}
+function openVerify(id){
   var t = taskById(id);
   if(!t) return toast('任务不存在');
   if(isLead()) return toast('邻长视角不参与接单');
   if(t.status !== 'open') return toast('这单已被接走');
   if(t.from === db.user.name) return toast('不能接自己发布的单');
-  t.status = 'taken'; t.taker = db.user.name; t.takerBuilding = db.user.building; t.takenAt = Date.now();
-  save(); render(); toast('接单成功，按时段完成即可');
+  if(db.user.score < 60 && t.mode === 'paid') return toast('信用低于 60，只能接公益单');
+  if(activeCount() >= 3) return toast('已有 3 单在进行中，送达确认后再接');
+
+  var brief = '<div class="pick mt10"><div class="pk">' + catName(t.type) + '</div><div style="flex:1">' +
+      '<b style="font-weight:600">' + esc(t.title) + '</b>' +
+      '<div class="meta">' + esc(t.from) + ' · ' + esc(t.building) + ' · ' + esc(t.slot) + '</div></div></div>';
+
+  if(db.user.sidVerified){
+    document.getElementById('modalBox').innerHTML =
+      '<div class="eyebrow">接单确认</div>' +
+      '<div class="h1 mt6" style="font-size:20px">学号已验证，确认接这一单</div>' +
+      '<div class="note mt6">身份只核一次，之后接单不再重复填写。</div>' +
+      brief +
+      '<div class="meta mt10">已验证学号 <b class="code">' + sidMask(db.user.sid) + '</b></div>' +
+      '<div class="row mt20" style="justify-content:flex-end;gap:8px"><button class="btn gray" data-act="close-modal">取消</button>' +
+        '<button class="btn" data-act="take-ok" data-id="' + t.id + '">确认接单</button></div>';
+  } else {
+    document.getElementById('modalBox').innerHTML =
+      '<div class="eyebrow">接单验证</div>' +
+      '<div class="h1 mt6" style="font-size:20px">先核对学号，再领这一单</div>' +
+      '<div class="note mt6">只用来确认你是本校在读住户，验证后对外只显示尾号。</div>' +
+      brief +
+      '<label class="f">学号 <span style="color:#A05A45">必填 · 8–12 位数字</span></label>' +
+      '<input id="v-sid" inputmode="numeric" autocomplete="off" placeholder="如 2023110112">' +
+      '<div class="field-err" id="v-err"></div>' +
+      '<div class="row mt20" style="justify-content:flex-end;gap:8px"><button class="btn gray" data-act="close-modal">取消</button>' +
+        '<button class="btn" data-act="verify-do" data-id="' + t.id + '">验证并接单</button></div>';
+  }
+  document.getElementById('modal').classList.add('on');
+}
+
+function sidMask(sid){
+  sid = String(sid || '');
+  return sid.length >= 4 ? '****' + sid.slice(-4) : '****';
+}
+
+function verifyAndTake(id){
+  var input = document.getElementById('v-sid');
+  var err = document.getElementById('v-err');
+  var val = input ? String(input.value).replace(/\s/g,'') : '';
+  if(!sidValid(val)){
+    if(err) err.textContent = '学号应为 8–12 位数字，请再核对一次';
+    if(input) input.focus();
+    return;
+  }
+  db.user.sid = val; db.user.sidVerified = true;
+  doTake(id, true);
+}
+
+function doTake(id, verifiedNow){
+  var t = taskById(id);
+  if(!t) return toast('任务不存在');
+  if(t.status !== 'open') return toast('这单已被接走');
+  if(t.from === db.user.name) return toast('不能接自己发布的单');
+  if(db.user.score < 60 && t.mode === 'paid') return toast('信用低于 60，只能接公益单');
+  if(activeCount() >= 3) return toast('已有 3 单在进行中，送达确认后再接');
+  t.status = 'taken'; t.taker = db.user.name; t.takerBuilding = db.user.building;
+  t.takenAt = Date.now(); t.takerSid = db.user.sid;
+  save(); closeModal();
+  location.hash = '#doing';
+  render();
+  toast(verifiedNow ? '学号验证通过，接单成功' : '接单成功，去「我的接单」看取件码');
+}
+
+function sidValid(v){ return /^\d{8,12}$/.test(String(v || '').replace(/\s/g,'')); }
+
+function openSelfVerify(){
+  document.getElementById('modalBox').innerHTML =
+    '<div class="eyebrow">学号验证</div>' +
+    '<div class="h1 mt6" style="font-size:20px">验证一次，之后接单不再填</div>' +
+    '<div class="note mt6">只用于确认本校在读身份，对外只显示尾号。</div>' +
+    '<label class="f">学号 <span style="color:#A05A45">8–12 位数字</span></label>' +
+    '<input id="v-sid2" inputmode="numeric" autocomplete="off" placeholder="如 2023110112" value="' + esc(db.user.sid || '') + '">' +
+    '<div class="field-err" id="v-err2"></div>' +
+    '<div class="row mt20" style="justify-content:flex-end;gap:8px"><button class="btn gray" data-act="close-modal">取消</button>' +
+      '<button class="btn" data-act="verify-self-do">确认验证</button></div>';
+  document.getElementById('modal').classList.add('on');
+}
+
+function verifySelf(){
+  var input = document.getElementById('v-sid2'), err = document.getElementById('v-err2');
+  var val = input ? String(input.value).replace(/\s/g,'') : '';
+  if(!sidValid(val)){
+    if(err) err.textContent = '学号应为 8–12 位数字，请再核对一次';
+    if(input) input.focus();
+    return;
+  }
+  db.user.sid = val; db.user.sidVerified = true;
+  save(); closeModal(); render();
+  toast('学号已验证 · ' + sidMask(val));
+}
+
+function dropTask(id){
+  var t = taskById(id);
+  if(!t || t.taker !== db.user.name || t.status !== 'taken') return toast('状态已变化，刷新看看');
+  t.status = 'open'; delete t.taker; delete t.takerBuilding; delete t.takenAt; delete t.takerSid;
+  save(); render(); toast('已放弃，这单回到任务集市');
 }
 function deliverTask(id){
   var t = taskById(id);
@@ -673,7 +1113,7 @@ function deliverTask(id){
 function confirmTask(id){
   var t = taskById(id);
   if(!t || t.status !== 'delivered') return toast('还没有待确认的送达');
-  if(t.from !== db.user.name && t.taker !== db.user.name) return toast('只有发起人或接单人能确认');
+  if(t.from !== db.user.name) return toast('等发布人确认收货');
   var takerBd = t.takerBuilding || t.building;
   var sameBuilding = (t.building === takerBd);
   var paid = (t.mode === 'paid' && !sameBuilding);
@@ -699,38 +1139,80 @@ function cancelTask(id){
 }
 
 /* ================= 我的 ================= */
+var RULES = [
+  '接单前验证一次学号，通过后不再重复填写。',
+  '同一时间最多 3 单在进行中，送达确认后才能再接。',
+  '同栋记 1 时间币；跨栋报酬由发布人自定，平台按 5% 收服务费，单笔最高 3 元。',
+  '取件码接单后才可见，只有你和发布人能看到，别外传。',
+  '约定时段内送达；超时未送达，邻长会把单释放回集市。',
+  '信用低于 60 只能接公益单；每完成一单 +2 分。',
+  '有争议先沟通，48 小时未确认可请邻长核验，不要私下转账。'
+];
+
 function viewMe(){
   var u = db.user;
   var mine = db.tasks.filter(function(t){ return t.from === u.name; });
-  var doing = db.tasks.filter(function(t){ return t.taker === u.name; });
+  var active = db.tasks.filter(function(t){ return t.taker===u.name && (t.status==='taken'||t.status==='delivered'); });
+  var hist = db.tasks.filter(function(t){ return t.taker===u.name && t.status==='confirmed'; });
   var doneCnt = db.tasks.filter(function(t){ return t.status === 'confirmed'; }).length;
 
-  function rows(list, emptyText){
-    if(!list.length) return '<tr><td colspan="3" class="note">' + emptyText + '</td></tr>';
-    return list.map(function(t){
-      return '<tr><td><b style="font-weight:600">' + esc(t.title) + '</b><div class="note">' + catName(t.type) + ' · ' + esc(t.slot) + '</div></td>' +
+  function mineRows(){
+    if(!mine.length) return '<tr><td colspan="4" class="note">还没有发布过需求</td></tr>';
+    return mine.map(function(t){
+      var op;
+      if(t.status==='delivered') op = '<button class="btn sm" data-act="confirm" data-id="' + t.id + '">确认收货</button>';
+      else if(t.status==='open') op = '<button class="btn gray sm" data-act="cancel" data-id="' + t.id + '">撤回</button>';
+      else if(t.status==='taken') op = '<span class="note">' + esc(t.taker||'') + ' 正在办</span>';
+      else if(t.status==='confirmed') op = '<span class="note">已结算</span>';
+      else op = '<span class="note">已关闭</span>';
+      return '<tr><td><b style="font-weight:600">' + esc(t.title) + '</b><div class="note">' + catName(t.type) + ' · ' + esc(t.slot) + '</div>' +
+        (t.code ? '<div class="meta mt6">取件码　<b class="code">' + esc(t.code) + '</b></div>' : '') + '</td>' +
         '<td><span class="status ' + (t.status==='open'?'open':'') + '"><i></i>' + statusText(t.status) + '</span></td>' +
-        '<td class="note" style="text-align:right">' + fmtTime(t.createdAt) + '</td></tr>';
+        '<td class="note">' + fmtTime(t.createdAt) + '</td>' +
+        '<td style="text-align:right">' + op + '</td></tr>';
     }).join('');
   }
 
+  var verifyChip = u.sidVerified
+    ? '<span class="lock ok">' + ic('check', 12) + '学号已验证 · ' + sidMask(u.sid) + '</span>'
+    : '<span class="lock warn">学号未验证</span><button class="btn ghost sm" data-act="verify-self" style="margin-left:8px">去验证</button>';
+  var cash = db.ledger.filter(function(l){ return l.kind==='cash'; }).reduce(function(a,l){ return a + l.amount; }, 0);
+
+  var assets = [
+    {k:'时间币', v:u.coins, unit:'币', f:'同栋公益单每单 +1，只能在校邻四个模块内抵扣，不可提现'},
+    {k:'现金收益', v:'¥' + money(cash), unit:'', f:'只有跨楼有偿单产生，结算时扣 5% 服务费，单笔最高 3 元'},
+    {k:'信用分', v:u.score, unit:level(u.score), f:'每完成一单 +2；低于 60 只能接公益单'},
+    {k:'取用额度', v:db.credits, unit:'次', f:'上传一份资料 +2 次，取用一次 −1，同栋资料优先'}
+  ];
+
   var body =
-    '<div class="page-head"><div><div class="eyebrow">' + (isLead()?'邻长':'学生') + '视角 · 游客</div>' +
-      '<div class="h1 mt6">' + esc(u.name) + '<span style="font-weight:400;font-size:13px;color:var(--muted);margin-left:10px">' + esc(u.building) + '</span></div></div></div>' +
-    '<div class="grid3">' +
-      '<div class="card stat"><div class="k">信用分</div><div class="n">' + u.score + '<small>' + level(u.score) + ' ' + levelWord(u.score) + '</small></div>' +
-        '<div class="bar"><i style="width:' + u.score + '%"></i></div><div class="f">完成一单 +2</div></div>' +
-      '<div class="card stat"><div class="k">时间币</div><div class="n">' + u.coins + '<small>枚</small></div><div class="f">只在四个模块内流通</div></div>' +
-      '<div class="card stat"><div class="k">已完成 / 额度</div><div class="n">' + doneCnt + '<small>单 · 额度 ' + db.credits + ' 次</small></div><div class="f">上传资料换额度</div></div>' +
+    '<div class="page-head"><div><div class="eyebrow">账户 · 游客体验</div>' +
+      '<div class="h1 mt6">我的</div></div>' +
+      '<div class="spacer"></div><button class="btn ghost sm resetbtn" data-act="reset">重置数据</button></div>' +
+    '<div class="idcard">' +
+      '<div class="av">游</div>' +
+      '<div style="flex:1;min-width:200px">' +
+        '<div class="nm">' + esc(u.name) + verifyChip + '</div>' +
+        '<div class="sub">' + esc(u.building) + ' · ' + (isLead()?'邻长':'学生') + ' · 完成 ' + doneCnt + ' 单</div>' +
+      '</div>' +
     '</div>' +
-    '<div class="grid mt20" style="align-items:start">' +
-      '<div class="section"><div class="row between"><div class="h2">我发布的</div><span class="mini">' + mine.length + ' 条</span></div>' +
-        '<table class="tb mt10"><thead><tr><th>需求</th><th>状态</th><th style="text-align:right">时间</th></tr></thead><tbody>' + rows(mine,'还没有发布过需求') + '</tbody></table></div>' +
-      '<div class="section"><div class="row between"><div class="h2">我接的单</div><span class="mini">' + doing.length + ' 条</span></div>' +
-        '<table class="tb mt10"><thead><tr><th>需求</th><th>状态</th><th style="text-align:right">时间</th></tr></thead><tbody>' + rows(doing,'还没有接过单') + '</tbody></table></div>' +
-    '</div>' +
-    '<div class="section mt20"><div class="row between"><div class="h2">时间币与资金流水</div><span class="mini">共 ' + db.ledger.length + ' 条</span></div>' +
-      '<table class="tb mt10"><thead><tr><th>记录</th><th style="text-align:right">变动</th></tr></thead><tbody>' +
+    '<div class="row between mt24"><div class="h2">我的资产</div><span class="mini">完成一单后按规则进账</span></div>' +
+    '<div class="wallet mt12">' + assets.map(function(a){
+      return '<div class="card asset"><div class="k">' + a.k + '</div>' +
+        '<div class="n">' + a.v + (a.unit ? '<small>' + a.unit + '</small>' : '') + '</div>' +
+        '<div class="f">' + a.f + '</div></div>';
+    }).join('') + '</div>' +
+    '<a class="card hover entry mt16" href="#doing">' +
+      '<div class="row" style="gap:12px;align-items:center">' + ic('doing', 18) +
+        '<div><div class="h2">我的接单</div><div class="meta">进行中 ' + active.length + ' 单 · 历史完成 ' + hist.length + ' 单</div></div></div>' +
+      '<div class="row" style="gap:8px;align-items:center"><span class="mini">取件码在这里看</span>' + ic('arrow', 16) + '</div></a>' +
+    foldSection('我发布的', mine.length + ' 条',
+      '<table class="tb"><thead><tr><th>需求</th><th>状态</th><th>时间</th><th style="text-align:right">操作</th></tr></thead><tbody>' + mineRows() + '</tbody></table>') +
+    foldSection('平台规则', RULES.length + ' 条', '<div class="rules">' + RULES.map(function(r,i){
+      return '<div class="r"><b>' + (i+1) + '</b><span>' + r + '</span></div>';
+    }).join('') + '</div>') +
+    foldSection('时间币与资金流水', '共 ' + db.ledger.length + ' 条',
+      '<table class="tb"><thead><tr><th>记录</th><th style="text-align:right">变动</th></tr></thead><tbody>' +
         db.ledger.slice(0,9).map(function(l){
           var v;
           if(l.kind==='coin') v = (l.amount>0?'+':'') + l.amount + ' 币';
@@ -738,10 +1220,81 @@ function viewMe(){
           else if(l.kind==='fee') v = '平台 +' + money(l.amount) + ' 元';
           else v = '现金 +' + money(l.amount) + ' 元';
           return '<tr><td>' + esc(l.text) + '<div class="note">' + fmtTime(l.ts) + '</div></td><td style="text-align:right"><b style="font-weight:600">' + v + '</b></td></tr>';
-        }).join('') +
-      '</tbody></table></div>' +
-    '<div class="row mt18" style="gap:14px"><button class="btn ghost sm" data-act="reset">重置演示数据</button></div>';
+        }).join('') + '</tbody></table>');
   return layout('me', body);
+}
+
+/* ================= 我的接单（接单后的独立工作台） ================= */
+function viewDoing(){
+  var u = db.user;
+  var active = db.tasks.filter(function(t){ return t.taker===u.name && (t.status==='taken'||t.status==='delivered'); })
+    .sort(function(a,b){ return (a.takenAt||0) - (b.takenAt||0); });
+  var hist = db.tasks.filter(function(t){ return t.taker===u.name && t.status==='confirmed'; })
+    .sort(function(a,b){ return (b.confirmedAt||0) - (a.confirmedAt||0); });
+
+  var head = '<div class="page-head"><div><div class="eyebrow">接单工作台 · 进行中 ' + active.length + ' / 3</div>' +
+      '<div class="h1 mt6">我的接单</div></div><div class="spacer"></div>' +
+      (u.sidVerified
+        ? '<span class="lock ok">' + ic('check', 12) + '学号已验证 · ' + sidMask(u.sid) + '</span>'
+        : '<span class="lock warn">学号未验证</span><button class="btn ghost sm" data-act="verify-self" style="margin-left:8px">去验证</button>') + '</div>';
+
+  var body;
+  if(!active.length){
+    body = '<div class="empty">还没有进行中的单' +
+        '<div class="meta" style="margin-top:12px">接单后会转到这一页：取件码、地点、时段都在这里</div>' +
+        '<div class="row" style="justify-content:center;margin-top:16px"><a class="btn" href="#market">去任务集市</a></div></div>';
+  } else {
+    body = '<div class="grid">' + active.map(jobCard).join('') + '</div>';
+  }
+
+  if(hist.length){
+    body += foldSection('已完成', hist.length + ' 单',
+      '<table class="tb"><thead><tr><th>需求</th><th>结算</th><th style="text-align:right">时间</th></tr></thead><tbody>' +
+      hist.map(function(t){
+        var money1 = t.mode==='paid' && t.building!==(t.takerBuilding||t.building)
+          ? '<b style="font-weight:600">' + money(t.fee - platformFee(t.fee)) + ' 元</b>'
+          : '<b style="font-weight:600">+1 时间币</b>';
+        return '<tr><td><b style="font-weight:600">' + esc(t.title) + '</b><div class="note">' + catName(t.type) + ' · ' + esc(t.slot) + '</div></td>' +
+          '<td>' + money1 + '</td>' +
+          '<td class="note" style="text-align:right">' + fmtTime(t.confirmedAt || t.createdAt) + '</td></tr>';
+      }).join('') + '</tbody></table>');
+  }
+  return layout('doing', head + body);
+}
+
+function jobCard(t){
+  var cur = t.status==='delivered' ? 2 : 1;
+  var stepsHTML = '<div class="steps">' + ['已接单','已送达','对方确认'].map(function(s,i){
+    return '<div class="st' + ((i+1)<=cur?' on':'') + '"><i></i><b>' + s + '</b></div>';
+  }).join('') + '</div>';
+
+  var actions;
+  if(t.status === 'taken'){
+    actions = '<button class="btn" data-act="deliver" data-id="' + t.id + '">我已送达</button>' +
+      '<button class="btn ghost" data-act="contact">联系对方</button>' +
+      '<button class="btn ghost" data-act="drop" data-id="' + t.id + '">放弃这单</button>';
+  } else {
+    actions = '<span class="note">已送达，等 ' + esc(t.from) + ' 确认收货后结算</span>' +
+      '<div class="spacer"></div><button class="btn ghost" data-act="contact">联系对方</button>';
+  }
+
+  return '<div class="card job">' +
+    '<div class="row between"><span class="status ' + (t.status==='delivered'?'':'open') + '"><i></i>' + statusText(t.status) + '</span>' +
+      '<span class="mini">' + fmtTime(t.takenAt || t.createdAt) + '接单</span></div>' +
+    '<div class="title">' + esc(t.title) + '</div>' +
+    '<div class="meta">' + catName(t.type) + ' · ' + esc(t.building) + ' · ' + esc(t.slot) + '</div>' +
+    stepsHTML +
+    '<div class="codebox"><div><div class="lb">取件码 / 门牌</div><div class="cd">' + esc(t.code || '—') + '</div></div>' +
+      (t.code ? '<button class="btn ghost sm" data-act="copy-code" data-code="' + esc(t.code) + '">' + ic('copy', 14) + '复制</button>' : '') + '</div>' +
+    '<div class="jobinfo">' +
+      '<div class="r"><span class="k">取件地点</span><span class="v">' + esc(t.building) + '</span></div>' +
+      '<div class="r"><span class="k">送达时段</span><span class="v">' + esc(t.slot) + '</span></div>' +
+      '<div class="r"><span class="k">发布人</span><span class="v">' + esc(t.from) + '</span></div>' +
+      (t.note ? '<div class="r"><span class="k">备注</span><span class="v">' + esc(t.note) + '</span></div>' : '') +
+    '</div>' +
+    '<div class="jobacts">' + actions + '</div>' +
+    '<div class="mini">按约定时段送达；超时未送达会被邻长释放回集市</div>' +
+  '</div>';
 }
 
 /* ================= 闲置 ================= */
@@ -787,12 +1340,12 @@ function viewGoods(){
 function openGoods(){
   document.getElementById('modalBox').innerHTML =
     '<div class="eyebrow">发布闲置</div>' +
-    '<div class="h1 mt6" style="font-size:19px">挂出来，同栋的人先看到</div>' +
+    '<div class="h1 mt6" style="font-size:20px">挂出来，同栋的人先看到</div>' +
     '<label class="f">物品名称</label><input id="g-title" placeholder="如：护眼台灯">' +
     '<div class="row mt10"><div style="flex:1"><label class="f" style="margin-top:0">价格（元）</label><input id="g-price" inputmode="decimal" placeholder="25"></div>' +
     '<div style="flex:1"><label class="f" style="margin-top:0">成色</label><select id="g-cond"><option>全新</option><option>九成新</option><option>八成新</option><option>有使用痕迹</option></select></div></div>' +
     '<label class="f">分类</label><select id="g-cat">' + GOODS_CATS.map(function(c){ return '<option value="' + c.k + '">' + c.n + '</option>'; }).join('') + '</select>' +
-    '<label class="f">交接楼栋 / 地点</label><input id="g-bd" value="' + esc(db.user.building) + '" placeholder="如：6 号楼楼下">' +
+    '<label class="f">交接楼栋 / 地点</label><input id="g-bd" value="' + esc(db.user.building) + '" placeholder="如：3 宿舍楼下">' +
     '<label class="f">说明</label><textarea id="g-note" placeholder="配件、能不能当面试、能不能先试两天"></textarea>' +
     '<div class="field-err" id="g-err"></div>' +
     '<div class="row mt18" style="justify-content:flex-end"><button class="btn gray" data-act="close-modal">取消</button><button class="btn" id="g-submit">发布</button></div>';
@@ -826,7 +1379,7 @@ function viewDocs(){
     '<div class="page-head"><div><div class="eyebrow">资料共享 · ' + all.length + ' 份</div>' +
       '<div class="h1 mt6">资料共享</div></div>' +
       '<div class="spacer"></div>' +
-      '<div style="text-align:right;padding-right:16px"><div class="stat" style="border:0;box-shadow:none;padding:0"><div class="k">可用额度</div><div class="n" style="margin-top:2px">' + db.credits + '</div></div></div>' +
+      '<div class="meta" style="display:flex;align-items:baseline;gap:8px;margin-right:24px"><span>可用额度</span><b style="font-size:24px;line-height:32px;font-weight:600;color:var(--ink)">' + db.credits + '</b><span>次</span></div>' +
       '<button class="btn" data-act="open-doc">上传资料</button></div>' +
     chipsHTML(filter.docs, dCats, 'docs', all.length) +
     '<div class="section"><table class="tb"><thead><tr><th>资料</th><th>课程</th><th>上传者</th><th>取用</th><th></th></tr></thead><tbody>' +
@@ -845,7 +1398,7 @@ function viewDocs(){
 function openDoc(){
   document.getElementById('modalBox').innerHTML =
     '<div class="eyebrow">上传资料</div>' +
-    '<div class="h1 mt6" style="font-size:19px">传一份，换两次取用</div>' +
+    '<div class="h1 mt6" style="font-size:20px">传一份，换两次取用</div>' +
     '<label class="f">资料标题</label><input id="d-title" placeholder="如：工程材料重点整理">' +
     '<div class="row mt10"><div style="flex:1"><label class="f" style="margin-top:0">课程</label><input id="d-course" placeholder="工程材料"></div>' +
     '<div style="flex:1"><label class="f" style="margin-top:0">学期</label><input id="d-term" placeholder="2025 春"></div></div>' +
@@ -967,8 +1520,8 @@ function openIdentity(){
   var u = db.user;
   document.getElementById('modalBox').innerHTML =
     '<div class="eyebrow">体验身份</div>' +
-    '<div class="h1 mt6" style="font-size:19px">游客体验，不登录</div>' +
-    '<label class="f">所在楼栋 / 区域</label><input id="i-bd" value="' + esc(u.building) + '" placeholder="如：6 号楼">' +
+    '<div class="h1 mt6" style="font-size:20px">游客体验，不登录</div>' +
+    '<label class="f">所在楼栋 / 区域</label><input id="i-bd" value="' + esc(u.building) + '" placeholder="如：3 宿舍">' +
     '<div class="note mt10">姓名固定为「' + ME + '」，视角在右上角切换。</div>' +
     '<div class="row mt18" style="justify-content:flex-end"><button class="btn gray" data-act="close-modal">取消</button><button class="btn" id="i-save">保存</button></div>';
   document.getElementById('modal').classList.add('on');
@@ -1003,6 +1556,7 @@ function render(){
   if(!isLead() && (v === 'lead' || v === 'data')) v = 'home';
   var html;
   if(v === 'market') html = viewMarket();
+  else if(v === 'doing') html = isLead() ? viewMarket() : viewDoing();
   else if(v === 'goods') html = viewGoods();
   else if(v === 'docs') html = viewDocs();
   else if(v === 'help') html = viewHelp();
@@ -1011,6 +1565,31 @@ function render(){
   else if(v === 'data') html = viewData();
   else html = isLead() ? viewHomeLead() : viewHomeStudent();
   app.innerHTML = html;
+  revealInit();
+  enterInit();
+}
+
+/* 首屏一次性入场：只给第一屏的 6 个块，64ms 递进，reduced-motion 直接跳过；
+   只在本次加载的第一次渲染跑，之后切页不再重复，避免每次导航都等一秒 */
+var _enterDone = false;
+function enterInit(){
+  if(_enterDone) return;
+  var reduce = false;
+  try{ reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches; }catch(e){}
+  if(reduce) return;
+  var innerEl = document.querySelector('#app .inner');
+  if(!innerEl) return;
+  var kids = [], cs = innerEl.children, k;
+  for(var i = 0; i < cs.length && kids.length < 6; i++){
+    var cn = String(cs[i].className || '');
+    if(!cn || cn.indexOf('topbar') >= 0 || cn.indexOf('reveal') >= 0) continue;
+    kids.push(cs[i]);
+  }
+  for(k = 0; k < kids.length; k++){
+    kids[k].style.setProperty('--d', (k * 64) + 'ms');
+    kids[k].classList.add('enter');
+  }
+  _enterDone = true;
 }
 
 document.addEventListener('click', function(e){
@@ -1025,7 +1604,23 @@ document.addEventListener('click', function(e){
   if(act === 'open-publish'){ openPublish(el.getAttribute('data-type')); return; }
   if(act === 'open-goods'){ openGoods(); return; }
   if(act === 'open-doc'){ openDoc(); return; }
-  if(act === 'take'){ takeTask(id); return; }
+  if(act === 'take'){ openVerify(id); return; }
+  if(act === 'take-ok'){ doTake(id); return; }
+  if(act === 'verify-do'){ verifyAndTake(id); return; }
+  if(act === 'verify-self'){ openSelfVerify(); return; }
+  if(act === 'verify-self-do'){ verifySelf(); return; }
+  if(act === 'drop'){ dropTask(id); return; }
+  if(act === 'contact'){ toast('演示版不接真实电话，约在楼下当面交接即可'); return; }
+  if(act === 'copy-code'){
+    var cd = el.getAttribute('data-code') || '';
+    var done = function(){ toast('已复制取件码：' + cd); };
+    try{
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(cd).then(done, function(){ toast('取件码：' + cd); });
+      } else { toast('取件码：' + cd); }
+    }catch(e){ toast('取件码：' + cd); }
+    return;
+  }
   if(act === 'deliver'){ deliverTask(id); return; }
   if(act === 'confirm'){ confirmTask(id); return; }
   if(act === 'cancel'){ cancelTask(id); return; }
@@ -1081,8 +1676,71 @@ document.addEventListener('pointerdown', function(e){
 window.addEventListener('hashchange', render);
 document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
 
+/* ================= 进场：位移 + 淡入，逐词点亮 ================= */
+var _obs = [];
+function revealInit(){
+  for(var i=0;i<_obs.length;i++){ try{ _obs[i].disconnect(); }catch(e){} }
+  _obs = [];
+  var reduce = false;
+  try{ reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches; }catch(e){}
+  var blocks = document.querySelectorAll('.metrics,.grid4,.grid,.grid3,.section,.page-head,.tagline');
+  var words = document.querySelectorAll('.tagline .w');
+  var vh = window.innerHeight || 800;
+  function onScreen(el){
+    var r = el.getBoundingClientRect();
+    return r.top < vh - 56 && r.bottom > 0;
+  }
+  function showAll(){
+    for(var a=0;a<blocks.length;a++) blocks[a].classList.remove('reveal');
+    for(var b=0;b<words.length;b++) words[b].classList.add('on');
+  }
+  if(reduce || typeof IntersectionObserver === 'undefined'){ showAll(); return; }
+  var io = new IntersectionObserver(function(es){
+    for(var i=0;i<es.length;i++){
+      if(es[i].isIntersecting){ es[i].target.classList.add('in'); io.unobserve(es[i].target); }
+    }
+  }, {threshold:0.06, rootMargin:'0px 0px -6% 0px'});
+  var pending = [];
+  for(var k=0;k<blocks.length;k++){
+    if(onScreen(blocks[k])) continue;          /* 已在首屏：直接呈现，不做隐藏 */
+    blocks[k].classList.add('reveal');
+    io.observe(blocks[k]);
+    pending.push(blocks[k]);
+  }
+  _obs.push(io);
+  var io2 = null;
+  if(words.length){
+    var tagEl = document.querySelectorAll('.tagline')[0] || words[0];
+    if(onScreen(tagEl)){
+      /* 已在首屏：略作停顿后逐词点亮，保证演示时看得到节奏 */
+      for(var n=0;n<words.length;n++){
+        words[n].style.transitionDelay = (n*110) + 'ms';
+        pending.push(words[n]);
+      }
+      setTimeout(function(){
+        for(var q=0;q<words.length;q++) words[q].classList.add('on');
+      }, 260);
+    } else {
+      io2 = new IntersectionObserver(function(es){
+        for(var i=0;i<es.length;i++){
+          if(es[i].isIntersecting){ es[i].target.classList.add('on'); io2.unobserve(es[i].target); }
+        }
+      }, {threshold:0.6});
+      for(var m=0;m<words.length;m++){ io2.observe(words[m]); pending.push(words[m]); }
+      _obs.push(io2);
+    }
+  }
+  /* 兜底：1.8 秒后仍未点亮的一律显示，避免演示时内容缺块 */
+  if(pending.length){
+    setTimeout(function(){
+      for(var p=0;p<pending.length;p++){ pending[p].classList.add('in'); pending[p].classList.add('on'); }
+    }, 1800);
+  }
+}
+
 load();
 render();
 </script>
 </body>
 </html>
+
